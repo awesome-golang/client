@@ -6,7 +6,7 @@ import TlfInfo from './tlf-info-container'
 
 type Props = {
   path: Types.Path,
-  mode: 'row' | 'default',
+  mode: 'row' | 'default' | 'menu',
 }
 
 export default (props: Props) => {
@@ -16,7 +16,12 @@ export default (props: Props) => {
     case 2:
       return null
     case 3:
-      return <TlfInfo {...props} />
+      // TlfInfo does not have a mode='menu'
+      if (props.mode === 'row') {
+        return <TlfInfo path={props.path} mode={'row'} />
+      } else {
+        return <TlfInfo path={props.path} mode={'default'} />
+      }
     default:
       return <PathItemInfo {...props} />
   }
